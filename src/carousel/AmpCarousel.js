@@ -62,7 +62,7 @@ function Dot({ index, classes, ampStateProperty }) {
       className={clsx(classes.dot, {
         [classes.dotSelected]: index === 0,
       })}
-      amp-bind={`class->rsfCarousel.${ampStateProperty} == ${index} ? '${classes.dot} ${classes.dotSelected}' : '${classes.dot}'`}
+      amp-bind={`class->${ampStateProperty} == ${index} ? '${classes.dot} ${classes.dotSelected}' : '${classes.dot}'`}
     />
   )
 }
@@ -82,7 +82,6 @@ function AmpCarousel(props) {
     style,
     children,
     layout,
-    ampStateProperty,
     belowAdornments,
     autoplay,
     interval,
@@ -146,7 +145,7 @@ function AmpCarousel(props) {
       {indicators && (
         <div className={classes.dots}>
           {React.Children.map(children, (_, index) => (
-            <Dot index={index} ampStateProperty={`${id}-${ampStateProperty}`} />
+            <Dot index={index} ampStateProperty={`rsfMediaCarousel.${id}.index`} />
           ))}
         </div>
       )}
@@ -191,11 +190,6 @@ AmpCarousel.propTypes = {
   layout: PropTypes.string,
 
   /**
-   * The property in the amp state to bind to.  Defaults to "selectedIndex"
-   */
-  ampStateProperty: PropTypes.string,
-
-  /**
    * If false, the auto play behavior is disabled
    */
   autoplay: PropTypes.bool,
@@ -213,7 +207,7 @@ AmpCarousel.propTypes = {
 
 AmpCarousel.defaultProps = {
   arrows: true,
-  indicators: false,
+  indicators: true,
   id: 'carousel',
   layout: 'fill',
   autoplay: false,

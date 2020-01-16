@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -76,6 +76,10 @@
         {
           "@material-ui/core": {
             "transform": "@material-ui/core/${member}",
+            "preventFullImport": true
+          },
+          "@material-ui/styles": {
+            "transform": "@material-ui/styles/${member}",
             "preventFullImport": true
           },
           "@material-ui/icons": {

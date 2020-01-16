@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -38,6 +38,7 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
+    "babel-plugin-transform-imports": "^2.0.0",
     "create-index": "^2.5.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
@@ -68,6 +69,23 @@
         "@babel/plugin-transform-runtime",
         {
           "regenerator": true
+        }
+      ],
+      [
+        "babel-plugin-transform-imports",
+        {
+          "@material-ui/core": {
+            "transform": "@material-ui/core/${member}",
+            "preventFullImport": true
+          },
+          "@material-ui/icons": {
+            "transform": "@material-ui/icons/${member}",
+            "preventFullImport": true
+          },
+          "@material-ui/lab": {
+            "transform": "@material-ui/lab/${member}",
+            "preventFullImport": true
+          }
         }
       ],
       "@babel/plugin-proposal-class-properties"

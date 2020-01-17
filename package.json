@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -17,7 +17,7 @@
     }
   },
   "scripts": {
-    "release": "npm run build; cd dist; FILE=$(npm pack); curl -F package=@$FILE https://$GEMFURY_PUSH_TOKEN@push.fury.io/moovweb/; git push --tags;",
+    "release": "npm run build; cd dist; FILE=$(npm pack); curl -F package=@$FILE https://$GEMFURY_PUSH_TOKEN@push.fury.io/moovweb/",
     "test": "jest",
     "watch": "npm-watch",
     "push-build": "npm run build && cd dist && yalc push && cd ..",

@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {

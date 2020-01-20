@@ -47,10 +47,10 @@ AmpImage.propTypes = {
   /**
    * When specified, the image will be optimized for mobile devices by the Moovweb CDN.  Accepts the following keys:
    *
-   * - quality  - A number or string containing the number for the desired quality, on a scale from 1 (worst) to 100 (best).
-   * - width - A number or string containing the number for the desired pixel width.
-   * - height - A number or string containing the number for the desired pixel height.
-   * - format - A string containing the desired file format. Accepts "webp" or "jpeg".
+   * - quality  - (optional) A number or string containing the number for the desired quality, on a scale from 1 (worst) to 100 (best)
+   * - width - (optional) A number or string containing the number for the desired pixel width on phones. You only need to specify "height" or "width".  The original aspect ratio of the image is preserved.
+   * - height - (optional) A number or string containing the number for the desired pixel height. You only need to specify "height" or "width".  The original aspect ratio of the image is preserved.
+   * - format - (optional, defaults to webp) A string containing the desired file format. Accepts "webp" or "jpeg".  If webp is specified but the user's browser doesn not support webp, jpeg will be used.
    */
   optimize: PropTypes.shape({
     quality: PropTypes.number,

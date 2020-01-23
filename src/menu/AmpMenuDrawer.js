@@ -84,5 +84,5 @@ AmpMenuDrawer.propTypes = {
 
 AmpMenuDrawer.defaultProps = {
   id: 'rsfMenu',
-  anchor: 'right',
+  anchor: 'left',
 }

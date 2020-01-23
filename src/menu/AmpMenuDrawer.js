@@ -79,8 +79,10 @@ export default function AmpMenuDrawer({
 
 AmpMenuDrawer.propTypes = {
   id: PropTypes.string.isRequired,
+  align: PropTypes.string,
 }
 
 AmpMenuDrawer.defaultProps = {
   id: 'rsfMenu',
+  align: 'right',
 }

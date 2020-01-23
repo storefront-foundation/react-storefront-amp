@@ -54,7 +54,8 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-storefront": "^7.0.0-alpha.0",
-    "react-visibility-sensor": "^5.1.1"
+    "react-visibility-sensor": "^5.1.1",
+    "rewire": "^4.0.1"
   },
   "peerDependencies": {
     "react-storefront": "^7.0.0-alpha.0"

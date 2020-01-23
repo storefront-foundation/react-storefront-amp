@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import ReactVisibilitySensor from 'react-visibility-sensor'
-import DataBindingProvider from 'react-storefront/bind/DataBindingProvider'
+import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 import PWAContext from 'react-storefront/PWAContext'
 
 describe('Image', () => {
@@ -46,7 +46,7 @@ describe('Image', () => {
         useAmp: () => false
       }))
 
-      Image = require('react-storefront/Image').default
+      Image = require('react-storefront-amp/AmpImage').default
     })
   })
 
@@ -96,7 +96,7 @@ describe('Image', () => {
     quality = 100
     wrapper = mount(<Test />)
 
-    expect(wrapper.find('img').prop('src')).toBe(`https://opt.moovweb.net/?img=${src}&quality=100`)
+    expect(wrapper.find('img').prop('src')).toBe(`https://opt.moovweb.net/?quality=100&img=${src}`)
   })
 
   it('should optimize image when optimize prop is provided', () => {

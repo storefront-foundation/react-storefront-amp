@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import DataBindingContext from './DataBindingContext'
 import { useAmp } from 'next/amp'
-import isEmpty from 'lodash/isEmpty'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
-import set from 'lodash/set'
 import upperFirst from 'lodash/upperFirst'
 
 // Converts an expression with dot notation to a nested object
@@ -13,6 +11,8 @@ import upperFirst from 'lodash/upperFirst'
 //    foo.bar = value -> { foo: { bar: value } }
 
 function ampValueFromExpression(expression, value) {
+  if (expression == null) return null
+
   let node = {}
   const state = node
   const keys = expression.split('.')
@@ -91,7 +91,7 @@ export default function withDataBinding(Component) {
           bind: getAmpBind(amp, bind, createAmpValueExpression),
           on: createAmpHandlerAttribute(amp, normalizedBind, ampState),
           setState: createAmpStateChangeDescriptor,
-          createHandler: createAmpHandlerDescriptor(normalizedBind, ampState),
+          createHandler: createAmpHandlerDescriptor(normalizedBind, ampState)
         }}
       />
     )
@@ -111,7 +111,7 @@ export default function withDataBinding(Component) {
 function getAmpBind(amp, bind, createAmpValueExpression) {
   if (!amp || !bind) return () => ({})
   return ({ attribute, prop, value }) => ({
-    'amp-bind': `${attribute}->${value !== undefined ? value : createAmpValueExpression(prop)}`,
+    'amp-bind': `${attribute}->${value !== undefined ? value : createAmpValueExpression(prop)}`
   })
 }
 
@@ -134,7 +134,7 @@ function createAmpHandlerAttribute(amp, bind, ampState) {
 
     return eventStrings.length
       ? {
-          on: eventStrings.join(';'),
+          on: eventStrings.join(';')
         }
       : {}
   }
@@ -162,14 +162,18 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
     })
     if (stateChanges.length) {
       const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
-      if (stateChangeExpr) {
-        actionStrings.push(`AMP.setState({${ampState}:${stateChangeExpr}})`)
+      if (stateChangeExpr.length) {
+        stateChangeExpr.forEach(value => {
+          if (value) {
+            actionStrings.push(`AMP.setState({${ampState}:${value}})`)
+          }
+        })
       }
     }
     if (actionStrings.length) {
       return {
         event,
-        actions: actionStrings,
+        actions: actionStrings
       }
     }
     return null
@@ -183,18 +187,16 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
  * @return {string}
  */
 function createAmpStateChangeExpression(stateChanges, bind) {
-  const state = {}
-  stateChanges.forEach(({ value, prop = 'value' }) => {
+  return stateChanges.map(({ value, prop = 'value' }) => {
     const expressions = bind[prop]
     if (!expressions) {
       console.warn(
-        `could not create AMP event handler for prop ${prop}. No prop with that name was found.`,
+        `could not create AMP event handler for prop ${prop}. No prop with that name was found.`
       )
       return
     }
-    set(state, expressions[0], value)
+    return ampValueFromExpression(expressions[0], value)
   })
-  return isEmpty(state) ? '' : JSON.stringify(state).replace(/"/g, '')
 }
 
 /**
@@ -208,7 +210,7 @@ function createAmpStateChangeDescriptor(...valuePropPairs) {
   valuePropPairs.forEach(pair => {
     if (isUndefined(pair.value)) {
       console.warn(
-        'AMP state change must have a "value" prop for each object passed to amp.setState',
+        'AMP state change must have a "value" prop for each object passed to amp.setState'
       )
     } else {
       stateChanges.push(pair)

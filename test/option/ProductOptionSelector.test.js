@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
-import ProductOptionSelector from 'react-storefront/option/ProductOptionSelector'
+import ProductOptionSelector from 'react-storefront-amp/option/AmpProductOptionSelector'
 import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 import ProductOption from 'react-storefront/option/ProductOption'
 import PWAContext from 'react-storefront/PWAContext'
@@ -17,9 +17,9 @@ describe('ProductOptionSelector', () => {
         id: 'color1',
         image: {
           src: 'src1',
-          alt: 'alt1',
-        },
-      },
+          alt: 'alt1'
+        }
+      }
     ]
     sizes = [{ id: 'sm', text: 'sm' }]
   })
@@ -49,7 +49,7 @@ describe('ProductOptionSelector', () => {
       wrapper
         .find(ProductOptionSelector)
         .childAt(0)
-        .props().options,
+        .props().options
     ).toBe(colors)
   })
 
@@ -73,13 +73,13 @@ describe('ProductOptionSelector', () => {
       wrapper
         .find(ProductOption)
         .first()
-        .props().variant,
+        .props().variant
     ).toBe('swatch')
     expect(
       wrapper
         .find(ProductOption)
         .last()
-        .props().variant,
+        .props().variant
     ).toBe('text')
   })
 

@@ -6,13 +6,17 @@ import withDataBinding from './bind/withDataBinding'
 import clsx from 'clsx'
 import qs from 'qs'
 
-function AmpImage({ src, optimize, amp, bind, ...props }) {
+function AmpImage({ src, optimize, quality, amp, bind, ...props }) {
   const isAmp = useAmp()
   let layout
+
+  if (src == null) return null
 
   if (isAmp) {
     layout = props.contain || props.fill || props.aspectRatio ? 'fill' : 'intrinsic'
   }
+
+  optimize = { quality, ...optimize }
 
   const additionalProps = !isAmp
     ? {}
@@ -21,11 +25,11 @@ function AmpImage({ src, optimize, amp, bind, ...props }) {
           attribute: 'src',
           value: `'${getOptimizedSrc(
             isAmp,
-            '__url__',
-          )}'.split('__url__').join(encodeURIComponent(${amp.getValue('src')}))`,
+            '__url__'
+          )}'.split('__url__').join(encodeURIComponent(${amp.getValue('src')}))`
         }),
         lazy: false,
-        layout,
+        layout
       }
 
   return (
@@ -56,13 +60,13 @@ AmpImage.propTypes = {
     quality: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
-    format: PropTypes.oneOf(['webp', 'jpeg']),
-  }),
+    format: PropTypes.oneOf(['webp', 'jpeg'])
+  })
 }
 
 AmpImage.defaultProps = {
   ...Image.defaultProps,
-  optimize: {},
+  optimize: {}
 }
 
 export default withDataBinding(AmpImage)

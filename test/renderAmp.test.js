@@ -1,3 +1,4 @@
+import React from 'react'
 import { ServerStyleSheets, makeStyles } from '@material-ui/core/styles'
 import { removeInvalidCssClasses } from '../src/renderAmp'
 import ReactDOMServer from 'react-dom/server'

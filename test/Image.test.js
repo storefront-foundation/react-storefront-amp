@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import ReactVisibilitySensor from 'react-visibility-sensor'
-import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 import PWAContext from 'react-storefront/PWAContext'
 
 describe('Image', () => {
   let wrapper,
+    DataBindingProvider,
     Image,
     src = 'test.com',
     notFoundSrc,
@@ -46,6 +46,7 @@ describe('Image', () => {
         useAmp: () => false
       }))
 
+      DataBindingProvider = require('react-storefront-amp/bind/DataBindingProvider').default
       Image = require('react-storefront-amp/AmpImage').default
     })
   })

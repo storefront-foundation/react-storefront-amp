@@ -160,9 +160,9 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
         stateChanges.push(...action.stateChanges)
       }
     })
-    if (stateChanges) {
+    if (stateChanges.length) {
       const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
-      if (stateChangeExpr.length) {
+      if (stateChangeExpr) {
         stateChangeExpr.forEach(value => {
           if (value) {
             actionStrings.push(`AMP.setState({${ampState}:${value}})`)

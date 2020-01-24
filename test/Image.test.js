@@ -43,7 +43,7 @@ describe('Image', () => {
   beforeEach(() => {
     jest.isolateModules(() => {
       jest.mock('next/amp', () => ({
-        useAmp: () => false
+        useAmp: () => false,
       }))
 
       DataBindingProvider = require('react-storefront-amp/bind/DataBindingProvider').default
@@ -153,7 +153,7 @@ describe('Image', () => {
       wrapper
         .find('img')
         .parent()
-        .prop('className')
+        .prop('className'),
     ).toContain('contain')
   })
 
@@ -165,7 +165,7 @@ describe('Image', () => {
       wrapper
         .find('img')
         .parent()
-        .prop('className')
+        .prop('className'),
     ).toContain('fill')
   })
 
@@ -179,7 +179,7 @@ describe('Image', () => {
         .find('div')
         .filterWhere(n => n.prop('style'))
         .first()
-        .prop('style').paddingTop
+        .prop('style').paddingTop,
     ).toBe('50%')
   })
 

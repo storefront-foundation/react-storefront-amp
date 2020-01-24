@@ -10,10 +10,10 @@ describe('renderAmp', () => {
         {
           testClass: {
             padding: 0,
-            ...styles
-          }
+            ...styles,
+          },
         },
-        { name: 'RSFTest' }
+        { name: 'RSFTest' },
       )
       const TestComp = props => {
         let { classes } = props
@@ -41,20 +41,20 @@ describe('renderAmp', () => {
       const sheets = removeInvalidCssClasses(
         makeSheetsObject({
           '& .i-amphtml-layout': {
-            padding: 0
-          }
-        })
+            padding: 0,
+          },
+        }),
       )
       removeInvalidCssClasses(sheets)
       expect(sheets.sheetsRegistry.registry).toHaveLength(1)
       expect(Object.keys(sheets.sheetsRegistry.registry[0].rules.map)).toHaveLength(3)
       expect(
-        sheets.sheetsRegistry.registry[0].rules.map['.RSFTest-testClass-1 .i-amphtml-layout']
+        sheets.sheetsRegistry.registry[0].rules.map['.RSFTest-testClass-1 .i-amphtml-layout'],
       ).toBeUndefined()
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 [class*="amphtml-layout"]'
-        ]
+        ],
       ).toBeDefined()
     })
 
@@ -62,20 +62,22 @@ describe('renderAmp', () => {
       const sheets = removeInvalidCssClasses(
         makeSheetsObject({
           '& .i-amphtml-layout.test-2': {
-            padding: 0
-          }
-        })
+            padding: 0,
+          },
+        }),
       )
       removeInvalidCssClasses(sheets)
       expect(sheets.sheetsRegistry.registry).toHaveLength(1)
       expect(Object.keys(sheets.sheetsRegistry.registry[0].rules.map)).toHaveLength(3)
       expect(
-        sheets.sheetsRegistry.registry[0].rules.map['.RSFTest-testClass-1 .i-amphtml-layout.test-2']
+        sheets.sheetsRegistry.registry[0].rules.map[
+          '.RSFTest-testClass-1 .i-amphtml-layout.test-2'
+        ],
       ).toBeUndefined()
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 [class*="amphtml-layout"].test-2'
-        ]
+        ],
       ).toBeDefined()
     })
 
@@ -83,9 +85,9 @@ describe('renderAmp', () => {
       const sheets = removeInvalidCssClasses(
         makeSheetsObject({
           '& .i-amphtml-layout.i-amphtml-loader': {
-            padding: 0
-          }
-        })
+            padding: 0,
+          },
+        }),
       )
       removeInvalidCssClasses(sheets)
       expect(sheets.sheetsRegistry.registry).toHaveLength(1)
@@ -93,12 +95,12 @@ describe('renderAmp', () => {
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 .i-amphtml-layout.i-amphtml-loader'
-        ]
+        ],
       ).toBeUndefined()
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 [class*="amphtml-layout"][class*="amphtml-loader"]'
-        ]
+        ],
       ).toBeDefined()
     })
 
@@ -106,9 +108,9 @@ describe('renderAmp', () => {
       const sheets = removeInvalidCssClasses(
         makeSheetsObject({
           '& .i-amphtml-layout .i-amphtml-loader': {
-            padding: 0
-          }
-        })
+            padding: 0,
+          },
+        }),
       )
       removeInvalidCssClasses(sheets)
       expect(sheets.sheetsRegistry.registry).toHaveLength(1)
@@ -116,12 +118,12 @@ describe('renderAmp', () => {
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 .i-amphtml-layout .i-amphtml-loader'
-        ]
+        ],
       ).toBeUndefined()
       expect(
         sheets.sheetsRegistry.registry[0].rules.map[
           '.RSFTest-testClass-1 [class*="amphtml-layout"] [class*="amphtml-loader"]'
-        ]
+        ],
       ).toBeDefined()
     })
   })

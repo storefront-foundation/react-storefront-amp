@@ -145,7 +145,7 @@ export default async function renderAmp(document, sheets) {
         .replace(/\!important/g, '')
         .concat(styles.join(''))}
       key={'amp-custom'}
-    />
+    />,
   )
 
   return document

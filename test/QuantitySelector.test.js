@@ -63,13 +63,15 @@ describe('QuantitySelector', () => {
       expect(
         ariaLabelFinder
           .filterWhere(n => n.prop('aria-label').includes('subtract one quantity'))
-          .exists()
+          .exists(),
       ).toBe(true)
       expect(
-        ariaLabelFinder.filterWhere(n => n.prop('aria-label').includes('add one quantity')).exists()
+        ariaLabelFinder
+          .filterWhere(n => n.prop('aria-label').includes('add one quantity'))
+          .exists(),
       ).toBe(true)
       expect(
-        ariaLabelFinder.filterWhere(n => n.prop('aria-label').includes('does not exist')).exists()
+        ariaLabelFinder.filterWhere(n => n.prop('aria-label').includes('does not exist')).exists(),
       ).toBe(false)
     })
 
@@ -77,7 +79,7 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       expect(
-        wrapper.findWhere(n => n.prop('name') && n.prop('name').includes('quantity')).exists()
+        wrapper.findWhere(n => n.prop('name') && n.prop('name').includes('quantity')).exists(),
       ).toBe(true)
     })
 
@@ -153,7 +155,7 @@ describe('QuantitySelector', () => {
       wrapper = mount(<Test />)
 
       expect(wrapper.findWhere(n => n.prop('name') && n.prop('name').includes(name)).exists()).toBe(
-        true
+        true,
       )
     })
 
@@ -165,15 +167,15 @@ describe('QuantitySelector', () => {
       expect(
         ariaLabelFinder
           .filterWhere(n => n.prop('aria-label').includes(`subtract one ${ariaLabel}`))
-          .exists()
+          .exists(),
       ).toBe(true)
       expect(
         ariaLabelFinder
           .filterWhere(n => n.prop('aria-label').includes(`add one ${ariaLabel}`))
-          .exists()
+          .exists(),
       ).toBe(true)
       expect(
-        ariaLabelFinder.filterWhere(n => n.prop('aria-label').includes('does not exist')).exists()
+        ariaLabelFinder.filterWhere(n => n.prop('aria-label').includes('does not exist')).exists(),
       ).toBe(false)
     })
 

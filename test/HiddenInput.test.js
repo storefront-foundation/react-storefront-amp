@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 
 jest.mock('next/amp', () => ({
-  useAmp: () => true
+  useAmp: () => true,
 }))
 
 describe('HiddenInput', () => {
@@ -16,8 +16,8 @@ describe('HiddenInput', () => {
       Test = ({ children }) => {
         const [store, updateStore] = useState({
           pageData: {
-            name: 'test'
-          }
+            name: 'test',
+          },
         })
         return (
           <DataBindingProvider store={store} updateStore={updateStore}>
@@ -39,7 +39,7 @@ describe('HiddenInput', () => {
       wrapper = mount(
         <Test>
           <HiddenInput />
-        </Test>
+        </Test>,
       )
 
       expect(wrapper.find(HiddenInput).exists()).toBe(true)
@@ -49,7 +49,7 @@ describe('HiddenInput', () => {
       wrapper = mount(
         <Test>
           <HiddenInput bind="name" />
-        </Test>
+        </Test>,
       )
 
       expect(wrapper.find('input').prop('value')).toBe('test')
@@ -61,7 +61,7 @@ describe('HiddenInput', () => {
       wrapper = mount(
         <Test>
           <HiddenInput bind="name" />
-        </Test>
+        </Test>,
       )
       expect(wrapper.find('input').prop('amp-bind')).toBe("value->page.name || ''")
     })

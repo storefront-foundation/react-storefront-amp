@@ -91,7 +91,7 @@ export default function withDataBinding(Component) {
           bind: getAmpBind(amp, bind, createAmpValueExpression),
           on: createAmpHandlerAttribute(amp, normalizedBind, ampState),
           setState: createAmpStateChangeDescriptor,
-          createHandler: createAmpHandlerDescriptor(normalizedBind, ampState)
+          createHandler: createAmpHandlerDescriptor(normalizedBind, ampState),
         }}
       />
     )
@@ -111,7 +111,7 @@ export default function withDataBinding(Component) {
 function getAmpBind(amp, bind, createAmpValueExpression) {
   if (!amp || !bind) return () => ({})
   return ({ attribute, prop, value }) => ({
-    'amp-bind': `${attribute}->${value !== undefined ? value : createAmpValueExpression(prop)}`
+    'amp-bind': `${attribute}->${value !== undefined ? value : createAmpValueExpression(prop)}`,
   })
 }
 
@@ -134,7 +134,7 @@ function createAmpHandlerAttribute(amp, bind, ampState) {
 
     return eventStrings.length
       ? {
-          on: eventStrings.join(';')
+          on: eventStrings.join(';'),
         }
       : {}
   }
@@ -160,7 +160,7 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
         stateChanges.push(...action.stateChanges)
       }
     })
-    if (stateChanges.length) {
+    if (stateChanges) {
       const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
       if (stateChangeExpr.length) {
         stateChangeExpr.forEach(value => {
@@ -173,7 +173,7 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
     if (actionStrings.length) {
       return {
         event,
-        actions: actionStrings
+        actions: actionStrings,
       }
     }
     return null
@@ -191,7 +191,7 @@ function createAmpStateChangeExpression(stateChanges, bind) {
     const expressions = bind[prop]
     if (!expressions) {
       console.warn(
-        `could not create AMP event handler for prop ${prop}. No prop with that name was found.`
+        `could not create AMP event handler for prop ${prop}. No prop with that name was found.`,
       )
       return
     }
@@ -210,7 +210,7 @@ function createAmpStateChangeDescriptor(...valuePropPairs) {
   valuePropPairs.forEach(pair => {
     if (isUndefined(pair.value)) {
       console.warn(
-        'AMP state change must have a "value" prop for each object passed to amp.setState'
+        'AMP state change must have a "value" prop for each object passed to amp.setState',
       )
     } else {
       stateChanges.push(pair)

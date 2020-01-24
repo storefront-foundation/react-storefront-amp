@@ -1,12 +1,9 @@
 import { ServerStyleSheets, makeStyles } from '@material-ui/core/styles'
-import rewire from 'rewire'
-
+import { removeInvalidCssClasses } from '../src/renderAmp'
 import ReactDOMServer from 'react-dom/server'
 
-describe.skip('renderAmp', () => {
+describe('renderAmp', () => {
   describe('removeInvalidCssClasses', () => {
-    const removeInvalidCssClasses = rewire('../src/renderAmp.js').__get__('removeInvalidCssClasses')
-
     const makeSheetsObject = (styles = {}) => {
       const useStyles = makeStyles(
         {

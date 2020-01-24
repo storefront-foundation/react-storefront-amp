@@ -4,7 +4,7 @@ import { renderAmpAnalyticsTags } from 'react-storefront-analytics'
 
 const INVALID_CSS_CLASS_REGEX = /\.i-(amphtml[^\s.]*)/g
 
-const removeInvalidCssClasses = sheets => {
+export const removeInvalidCssClasses = sheets => {
   sheets.sheetsRegistry.registry.forEach(reg => {
     const invalidKeys = Object.keys(reg.rules.map).filter(key => key.includes('.i-amphtml'))
     invalidKeys.forEach(key => {
@@ -145,7 +145,7 @@ export default async function renderAmp(document, sheets) {
         .replace(/\!important/g, '')
         .concat(styles.join(''))}
       key={'amp-custom'}
-    />,
+    />
   )
 
   return document

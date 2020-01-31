@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
-import ProductOptionSelector from 'react-storefront/option/ProductOptionSelector'
+import ProductOptionSelector from 'react-storefront-amp/option/AmpProductOptionSelector'
 import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 import ProductOption from 'react-storefront/option/ProductOption'
 import PWAContext from 'react-storefront/PWAContext'

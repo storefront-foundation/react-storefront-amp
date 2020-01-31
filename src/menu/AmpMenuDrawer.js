@@ -8,7 +8,7 @@ export default function AmpMenuDrawer({
   id,
   classes,
   drawerWidth,
-  align,
+  anchor,
   cards,
   rootHeader,
   rootFooter,
@@ -63,7 +63,7 @@ export default function AmpMenuDrawer({
         key="sidebar"
         class={classes.root}
         layout="nodisplay"
-        side={align}
+        side={anchor}
         on="sidebarClose:AMP.setState({ rsfMenuState: { open: false } })"
       >
         <AmpMenuBody
@@ -79,8 +79,10 @@ export default function AmpMenuDrawer({
 
 AmpMenuDrawer.propTypes = {
   id: PropTypes.string.isRequired,
+  anchor: PropTypes.string,
 }
 
 AmpMenuDrawer.defaultProps = {
   id: 'rsfMenu',
+  anchor: 'left',
 }

@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import DataBindingContext from './DataBindingContext'
 import { useAmp } from 'next/amp'
-import isEmpty from 'lodash/isEmpty'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
-import set from 'lodash/set'
 import upperFirst from 'lodash/upperFirst'
 
 // Converts an expression with dot notation to a nested object
@@ -13,6 +11,8 @@ import upperFirst from 'lodash/upperFirst'
 //    foo.bar = value -> { foo: { bar: value } }
 
 function ampValueFromExpression(expression, value) {
+  if (expression == null) return null
+
   let node = {}
   const state = node
   const keys = expression.split('.')
@@ -163,7 +163,11 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
     if (stateChanges.length) {
       const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
       if (stateChangeExpr) {
-        actionStrings.push(`AMP.setState({${ampState}:${stateChangeExpr}})`)
+        stateChangeExpr.forEach(value => {
+          if (value) {
+            actionStrings.push(`AMP.setState({${ampState}:${value}})`)
+          }
+        })
       }
     }
     if (actionStrings.length) {
@@ -183,8 +187,7 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
  * @return {string}
  */
 function createAmpStateChangeExpression(stateChanges, bind) {
-  const state = {}
-  stateChanges.forEach(({ value, prop = 'value' }) => {
+  return stateChanges.map(({ value, prop = 'value' }) => {
     const expressions = bind[prop]
     if (!expressions) {
       console.warn(
@@ -192,9 +195,8 @@ function createAmpStateChangeExpression(stateChanges, bind) {
       )
       return
     }
-    set(state, expressions[0], value)
+    return ampValueFromExpression(expressions[0], value)
   })
-  return isEmpty(state) ? '' : JSON.stringify(state).replace(/"/g, '')
 }
 
 /**

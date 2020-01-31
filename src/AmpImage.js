@@ -10,6 +10,8 @@ function AmpImage({ src, optimize, amp, bind, ...props }) {
   const isAmp = useAmp()
   let layout
 
+  if (src == null) return null
+
   if (isAmp) {
     layout = props.contain || props.fill || props.aspectRatio ? 'fill' : 'intrinsic'
   }

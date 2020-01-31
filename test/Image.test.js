@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import ReactVisibilitySensor from 'react-visibility-sensor'
-import DataBindingProvider from 'react-storefront/bind/DataBindingProvider'
 import PWAContext from 'react-storefront/PWAContext'
 
 describe('Image', () => {
   let wrapper,
+    DataBindingProvider,
     Image,
     src = 'test.com',
     notFoundSrc,
@@ -43,10 +43,11 @@ describe('Image', () => {
   beforeEach(() => {
     jest.isolateModules(() => {
       jest.mock('next/amp', () => ({
-        useAmp: () => false
+        useAmp: () => false,
       }))
 
-      Image = require('react-storefront/Image').default
+      DataBindingProvider = require('react-storefront-amp/bind/DataBindingProvider').default
+      Image = require('react-storefront-amp/AmpImage').default
     })
   })
 
@@ -90,13 +91,6 @@ describe('Image', () => {
     wrapper = mount(<Test />)
 
     expect(wrapper.find('img').prop('spreadprops')).toBe(spreadprops)
-  })
-
-  it('should optimize image when quality prop is provided', () => {
-    quality = 100
-    wrapper = mount(<Test />)
-
-    expect(wrapper.find('img').prop('src')).toBe(`https://opt.moovweb.net/?img=${src}&quality=100`)
   })
 
   it('should optimize image when optimize prop is provided', () => {
@@ -152,7 +146,7 @@ describe('Image', () => {
       wrapper
         .find('img')
         .parent()
-        .prop('className')
+        .prop('className'),
     ).toContain('contain')
   })
 
@@ -164,7 +158,7 @@ describe('Image', () => {
       wrapper
         .find('img')
         .parent()
-        .prop('className')
+        .prop('className'),
     ).toContain('fill')
   })
 
@@ -178,7 +172,7 @@ describe('Image', () => {
         .find('div')
         .filterWhere(n => n.prop('style'))
         .first()
-        .prop('style').paddingTop
+        .prop('style').paddingTop,
     ).toBe('50%')
   })
 

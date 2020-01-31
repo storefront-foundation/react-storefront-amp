@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
-import DataBindingProvider from 'react-storefront/bind/DataBindingProvider'
+import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
+
+jest.mock('next/amp', () => ({
+  useAmp: () => true,
+}))
 
 describe('HiddenInput', () => {
-  let wrapper, Test, HiddenInput, mockAmp
+  let wrapper, Test, HiddenInput
 
   beforeEach(() => {
     jest.isolateModules(() => {
-      mockAmp = false
-
-      jest.mock('next/amp', () => ({
-        useAmp: () => mockAmp,
-      }))
-
-      HiddenInput = require('react-storefront/HiddenInput').default
+      HiddenInput = require('react-storefront-amp/HiddenInput').default
 
       Test = ({ children }) => {
         const [store, updateStore] = useState({
@@ -59,10 +57,6 @@ describe('HiddenInput', () => {
   })
 
   describe('amp', () => {
-    beforeEach(() => {
-      mockAmp = true
-    })
-
     it('should provide right binding', () => {
       wrapper = mount(
         <Test>

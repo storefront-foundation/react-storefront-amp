@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
-import QuantitySelector from 'react-storefront/QuantitySelector'
+import QuantitySelector from 'react-storefront-amp/AmpQuantitySelector'
 import DataBindingProvider from 'react-storefront-amp/bind/DataBindingProvider'
 import { IconButton, Input } from '@material-ui/core'
 
@@ -113,25 +113,13 @@ describe('QuantitySelector', () => {
       quantity = undefined
       wrapper = mount(<Test />)
 
-      expect(wrapper.find(Input).prop('value')).toBe(1)
+      expect(wrapper.find('input').prop('value')).toBe(1)
     })
   })
 
   describe('should render component with custom values', () => {
     afterEach(() => {
       clearValues()
-    })
-
-    it('should trigger custom onChange', () => {
-      onChange = value => (isChanged = true)
-      wrapper = mount(<Test />)
-
-      wrapper
-        .find(IconButton)
-        .last()
-        .simulate('click')
-
-      expect(isChanged).toBe(true)
     })
 
     it('should not allow adding more than custom max value', () => {

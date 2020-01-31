@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -53,11 +53,17 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-storefront": "^7.0.0-alpha.0",
-    "react-visibility-sensor": "^5.1.1"
+    "react-storefront": "^7.0.0",
+    "react-storefront-analytics": "^1.0.0",
+    "react-visibility-sensor": "^5.1.1",
+    "@material-ui/core": "4.5.2",
+    "@material-ui/icons": "4.5.1",
+    "@material-ui/lab": "^4.0.0-alpha.35",
+    "@material-ui/styles": "4.5.2"
   },
   "peerDependencies": {
-    "react-storefront": "^7.0.0-alpha.0"
+    "react-storefront": "^7.0.0",
+    "react-storefront-analytics": "^1.0.0"
   },
   "babel": {
     "presets": [

@@ -93,13 +93,6 @@ describe('Image', () => {
     expect(wrapper.find('img').prop('spreadprops')).toBe(spreadprops)
   })
 
-  it('should optimize image when quality prop is provided', () => {
-    quality = 100
-    wrapper = mount(<Test />)
-
-    expect(wrapper.find('img').prop('src')).toBe(`https://opt.moovweb.net/?quality=100&img=${src}`)
-  })
-
   it('should optimize image when optimize prop is provided', () => {
     optimize = { quality: 50 }
     wrapper = mount(<Test />)

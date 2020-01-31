@@ -6,7 +6,7 @@ import withDataBinding from './bind/withDataBinding'
 import clsx from 'clsx'
 import qs from 'qs'
 
-function AmpImage({ src, optimize, quality, amp, bind, ...props }) {
+function AmpImage({ src, optimize, amp, bind, ...props }) {
   const isAmp = useAmp()
   let layout
 
@@ -15,8 +15,6 @@ function AmpImage({ src, optimize, quality, amp, bind, ...props }) {
   if (isAmp) {
     layout = props.contain || props.fill || props.aspectRatio ? 'fill' : 'intrinsic'
   }
-
-  optimize = { quality, ...optimize }
 
   const additionalProps = !isAmp
     ? {}

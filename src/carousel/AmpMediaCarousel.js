@@ -17,16 +17,16 @@ const styles = theme => ({
     justifyContent: 'stretch',
     '& > div:first-of-type': {
       [theme.breakpoints.down('xs')]: {
-        margin: 0,
-      },
-    },
+        margin: 0
+      }
+    }
   },
   thumbnails: {
-    paddingBottom: theme.margins.container,
+    paddingBottom: theme.spacing(2)
   },
   lightboxMagnifyHint: {
-    display: 'none',
-  },
+    display: 'none'
+  }
 })
 
 const useStyles = makeStyles(styles, { name: 'RSFAmpMediaCarousel' })
@@ -44,8 +44,8 @@ function AmpMediaCarousel({ amp, maxItems = 8, ...props }) {
         ...props.media[type][index],
         ...amp.bind({
           attribute: 'src',
-          value: `${magnify ? magnifyPrefix : ''}${amp.getValue('media')}.${type}[${index}].src`,
-        }),
+          value: `${magnify ? magnifyPrefix : ''}${amp.getValue('media')}.${type}[${index}].src`
+        })
       }
     }
   }
@@ -59,7 +59,7 @@ function AmpMediaCarousel({ amp, maxItems = 8, ...props }) {
       thumbnails: Array(maxItems)
         .fill(0)
         .map(createSpace('thumbnails'))
-        .filter(Boolean),
+        .filter(Boolean)
     }
   }
 
@@ -84,7 +84,7 @@ function AmpMediaCarousel({ amp, maxItems = 8, ...props }) {
         bind={{
           index: `ampCarousel.index`,
           pairedIndex: `ampLightboxCarousel.index`,
-          open: 'open',
+          open: 'open'
         }}
       />
       <AmpDrawer open showCloseButton fullscreen>
@@ -101,7 +101,7 @@ function AmpMediaCarousel({ amp, maxItems = 8, ...props }) {
             magnifyHintClassName={classes.lightboxMagnifyHint}
             bind={{
               index: `ampLightboxCarousel.index`,
-              pairedIndex: `ampCarousel.index`,
+              pairedIndex: `ampCarousel.index`
             }}
           />
         </div>

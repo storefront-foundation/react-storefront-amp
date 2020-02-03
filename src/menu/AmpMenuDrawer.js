@@ -19,7 +19,6 @@ export default function AmpMenuDrawer({
       maxWidth: '100vw',
       marginTop: theme.headerHeight,
       height: `calc(100vh - ${theme.headerHeight}px)`,
-      borderTop: `1px solid ${theme.palette.divider}`,
       backgroundColor: theme.palette.background.paper,
       boxShadow: '10px 2px 10px -5px rgba(0, 0, 0, 0.2)',
       paddingBottom: '64px',

@@ -53,7 +53,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
-    "react-storefront": "^7.0.0",
+    "react-storefront": "^7.3.0",
     "react-storefront-analytics": "^1.0.0",
     "react-visibility-sensor": "^5.1.1",
     "@material-ui/core": "4.5.2",
@@ -62,7 +62,7 @@
     "@material-ui/styles": "4.5.2"
   },
   "peerDependencies": {
-    "react-storefront": "^7.0.0",
+    "react-storefront": "^7.3.0",
     "react-storefront-analytics": "^1.0.0"
   },
   "babel": {

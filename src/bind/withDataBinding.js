@@ -1,32 +1,12 @@
 import React, { useContext } from 'react'
 import DataBindingContext from './DataBindingContext'
 import { useAmp } from 'next/amp'
+import isEmpty from 'lodash/isEmpty'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
+import set from 'lodash/set'
 import upperFirst from 'lodash/upperFirst'
-
-// Converts an expression with dot notation to a nested object
-// Example:
-//    foo.bar = value -> { foo: { bar: value } }
-
-function ampValueFromExpression(expression, value) {
-  if (expression == null) return null
-
-  let node = {}
-  const state = node
-  const keys = expression.split('.')
-
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i]
-    node[key] = i === keys.length - 1 ? '___' : {}
-    node = node[key]
-  }
-
-  return JSON.stringify(state)
-    .replace(/"/g, '')
-    .replace(/___/, value)
-}
 
 /**
  * A higher-order function that adds 2-way databinding to a component.
@@ -163,11 +143,7 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
     if (stateChanges.length) {
       const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
       if (stateChangeExpr) {
-        stateChangeExpr.forEach(value => {
-          if (value) {
-            actionStrings.push(`AMP.setState({${ampState}:${value}})`)
-          }
-        })
+        actionStrings.push(`AMP.setState({${ampState}:${stateChangeExpr}})`)
       }
     }
     if (actionStrings.length) {
@@ -187,7 +163,8 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
  * @return {string}
  */
 function createAmpStateChangeExpression(stateChanges, bind) {
-  return stateChanges.map(({ value, prop = 'value' }) => {
+  const state = {}
+  stateChanges.forEach(({ value, prop = 'value' }) => {
     const expressions = bind[prop]
     if (!expressions) {
       console.warn(
@@ -195,8 +172,9 @@ function createAmpStateChangeExpression(stateChanges, bind) {
       )
       return
     }
-    return ampValueFromExpression(expressions[0], value)
+    set(state, expressions[0], value)
   })
+  return isEmpty(state) ? '' : JSON.stringify(state).replace(/"/g, '')
 }
 
 /**

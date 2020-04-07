@@ -1,12 +1,36 @@
 import React, { useContext } from 'react'
 import DataBindingContext from './DataBindingContext'
 import { useAmp } from 'next/amp'
-import isEmpty from 'lodash/isEmpty'
 import isObject from 'lodash/isObject'
 import isString from 'lodash/isString'
 import isUndefined from 'lodash/isUndefined'
-import set from 'lodash/set'
 import upperFirst from 'lodash/upperFirst'
+
+// Converts an object to a string suitable for AMP setState
+function ampStringify(object) {
+  if (typeof object !== 'object') return object
+  const keys = Object.keys(object).map(key => {
+    return `${key}:${ampStringify(object[key])}`
+  })
+  return `{${keys.join(',')}}`
+}
+
+// Converts an expression with dot notation to a nested object
+// Example:
+//    `foo.bar = value` -> { foo: { bar: value } }
+function createStateChange(expression, value) {
+  if (expression == null) return null
+  let node = {}
+  const state = node
+  const keys = expression.split('.')
+  // Building out the nested object
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    node[key] = i === keys.length - 1 ? value : {}
+    node = node[key]
+  }
+  return state
+}
 
 /**
  * A higher-order function that adds 2-way databinding to a component.
@@ -141,9 +165,16 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
       }
     })
     if (stateChanges.length) {
-      const stateChangeExpr = createAmpStateChangeExpression(stateChanges, normalizedBind)
-      if (stateChangeExpr) {
-        actionStrings.push(`AMP.setState({${ampState}:${stateChangeExpr}})`)
+      const changes = createStateChanges(stateChanges, normalizedBind)
+      if (changes) {
+        // Merge changes into a single change object
+        const value = changes.reduce((memo, obj) => {
+          return { ...memo, ...obj }
+        }, {})
+        // If a change exists, convert that change object into a AMP expression
+        if (Object.keys(value).length > 0) {
+          actionStrings.push(`AMP.setState({${ampState}:${ampStringify(value)}})`)
+        }
       }
     }
     if (actionStrings.length) {
@@ -157,14 +188,13 @@ function createAmpHandlerDescriptor(normalizedBind, ampState) {
 }
 
 /**
- * Creates a string to use for the state change needed based on the value/prop pairs
+ * Creates an array to use for the state changes needed based on the value/prop pairs
  * @param {Object[]} stateChanges Array of prop+values that should be changed in the state
  * @param {Object} bind The normalized bind object
  * @return {string}
  */
-function createAmpStateChangeExpression(stateChanges, bind) {
-  const state = {}
-  stateChanges.forEach(({ value, prop = 'value' }) => {
+function createStateChanges(stateChanges, bind) {
+  return stateChanges.map(({ value, prop = 'value' }) => {
     const expressions = bind[prop]
     if (!expressions) {
       console.warn(
@@ -172,9 +202,8 @@ function createAmpStateChangeExpression(stateChanges, bind) {
       )
       return
     }
-    set(state, expressions[0], value)
+    return createStateChange(expressions[0], value)
   })
-  return isEmpty(state) ? '' : JSON.stringify(state).replace(/"/g, '')
 }
 
 /**

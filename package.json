@@ -104,6 +104,9 @@
   "jest": {
     "clearMocks": true,
     "testEnvironment": "./test/config/jsdom.js",
+    "watchPathIgnorePatterns": [
+      "./node_modules"
+    ],
     "setupFiles": [
       "./test/config/setup.js"
     ],

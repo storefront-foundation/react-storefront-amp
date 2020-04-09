@@ -11,10 +11,20 @@ import withDataBinding from '../bind/withDataBinding'
 
 const useStyles = makeStyles(styles, { name: 'RSFAmpCarouselThumbnails' })
 
-function AmpCarouselThumbnails({ amp, carouselId, thumbnails, className }) {
+function AmpCarouselThumbnails({ amp, carouselId, thumbnails, className, thumbnailPosition }) {
   const styles = useStyles()
+  const isVertical = ['left', 'right'].includes(thumbnailPosition)
+
   return (
-    <div className={clsx(className, styles.thumbs, styles.tabsRoot)}>
+    <div
+      className={clsx(className, styles.thumbs, styles.tabsRoot, {
+        [styles.tabsVertical]: isVertical,
+        [styles.tabsRootLeft]: thumbnailPosition === 'left',
+        [styles.tabsRootRight]: thumbnailPosition === 'right',
+        [styles.tabsRootTop]: thumbnailPosition === 'top',
+        [styles.tabsRootBottom]: thumbnailPosition === 'bottom',
+      })}
+    >
       {thumbnails.map((props, i) => {
         const icon = (
           <Image {...props} ImgElement="amp-img" layout="fill" contain className={styles.thumb} />

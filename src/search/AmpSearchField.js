@@ -21,6 +21,7 @@ export default function AmpSearchField(props) {
   return (
     <div>
       <SearchField
+        {...props}
         classes={amp ? classes : undefined}
         SubmitButtonComponent={AmpSearchSubmitButton}
         inputProps={

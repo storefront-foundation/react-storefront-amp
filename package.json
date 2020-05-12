@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -62,7 +62,7 @@
     "react-visibility-sensor": "^5.1.1"
   },
   "peerDependencies": {
-    "react-storefront": "^7.3.0",
+    "react-storefront": "^8.0.1",
     "react-storefront-analytics": "^1.0.0"
   },
   "babel": {

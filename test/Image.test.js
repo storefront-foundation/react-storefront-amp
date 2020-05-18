@@ -100,6 +100,14 @@ describe('Image', () => {
   })
 
   it('should not optimize image when optimize prop is not provided', () => {
+    optimize = undefined
+    wrapper = mount(<Test />)
+
+    expect(wrapper.find('img').prop('src')).toBe(src)
+  })
+
+
+  it('should not optimize image when optimize prop is null', () => {
     optimize = null
     wrapper = mount(<Test />)
 

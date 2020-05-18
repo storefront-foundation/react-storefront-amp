@@ -16,10 +16,9 @@ describe('Image', () => {
     fill = false,
     lazy = false,
     lazyOffset = 100,
-    optimize = {},
+    optimize = null,
     spreadprops,
-    bind,
-    value
+    bind
 
   const clearValues = () => {
     wrapper.unmount()
@@ -98,6 +97,21 @@ describe('Image', () => {
     wrapper = mount(<Test />)
 
     expect(wrapper.find('img').prop('src')).toBe(`https://opt.moovweb.net/?quality=50&img=${src}`)
+  })
+
+  it('should not optimize image when optimize prop is not provided', () => {
+    optimize = undefined
+    wrapper = mount(<Test />)
+
+    expect(wrapper.find('img').prop('src')).toBe(src)
+  })
+
+
+  it('should not optimize image when optimize prop is null', () => {
+    optimize = null
+    wrapper = mount(<Test />)
+
+    expect(wrapper.find('img').prop('src')).toBe(src)
   })
 
   it('should lazy load image when lazy prop is provided', async () => {

@@ -3,7 +3,6 @@ import Image from 'react-storefront/Image'
 import { useAmp } from 'next/amp'
 import PropTypes from 'prop-types'
 import withDataBinding from './bind/withDataBinding'
-import clsx from 'clsx'
 import qs from 'qs'
 
 function AmpImage({ src, optimize, amp, bind, ...props }) {
@@ -64,7 +63,7 @@ AmpImage.propTypes = {
 
 AmpImage.defaultProps = {
   ...Image.defaultProps,
-  optimize: {},
+  optimize: null,
 }
 
 export default withDataBinding(AmpImage)
@@ -78,6 +77,9 @@ export default withDataBinding(AmpImage)
  * @return {String}
  */
 export function getOptimizedSrc(amp, url, options) {
+  if (!options || typeof options !== 'object') {
+    return url
+  }
   url = `https://opt.moovweb.net/?${qs.stringify({ ...options, img: url })}`
 
   // this allows use to generate optimized URLs using moustache templates, as in the case of `AmpSearchSuggestions`

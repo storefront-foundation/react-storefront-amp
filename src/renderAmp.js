@@ -22,7 +22,10 @@ export default async function renderAmp(document, sheets) {
   // $('img').attr({ height: '64', width: '64' })
   // document.html = $('body').html()
 
-  const $ = cheerio.load(document.html)
+  const $ = cheerio.load(document.html, {
+    // avoid auto-wrapping of html/head/body
+    xmlMode: true,
+  })
 
   // Add ⚡ to html
   $('html').attr('⚡', '')

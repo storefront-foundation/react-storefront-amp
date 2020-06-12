@@ -105,7 +105,6 @@ function AmpCarousel(props) {
         <amp-carousel
           id={id}
           controls
-          height={height}
           layout={layout}
           type="slides"
           {...amp.on(

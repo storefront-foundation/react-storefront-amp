@@ -12,13 +12,13 @@ function parseRemote(remote) {
   return {
     getUrl(root) {
       if (!remote) return null
-      return remote.replace(remoteVariablePattern, (_, path) => get(root, path))
+      return decodeURI(remote).replace(remoteVariablePattern, (_, path) => get(root, path))
     },
     getExpression(prefix) {
       if (!remote) return null
       return (
         '"' +
-        remote.replace(remoteVariablePattern, (_, path) => {
+        decodeURI(remote).replace(remoteVariablePattern, (_, path) => {
           return `"+${prefix}.${path}+"`
         }) +
         '"'

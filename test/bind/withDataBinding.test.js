@@ -399,5 +399,39 @@ describe('withDataBinding', () => {
         on: 'tap:AMP.setState({page:{foo:{bar:"hello"}}})',
       })
     })
+
+    it('should combine state changes into a single state change', () => {
+      let handler
+
+      const Component = withDataBinding(({ amp, value }) => {
+        handler = amp.on(
+          amp.createHandler(
+            'tap',
+            amp.setState(
+              {
+                prop: 'abc',
+                value: true,
+              },
+              {
+                prop: 'def',
+                value: 1,
+              },
+            ),
+          ),
+        )
+
+        return null
+      })
+
+      mount(
+        <Test>
+          <Component bind={{ abc: 'value1', def: 'value2' }} />
+        </Test>,
+      )
+
+      expect(handler).toEqual({
+        on: 'tap:AMP.setState({page:{value1:true,value2:1}})',
+      })
+    })
   })
 })

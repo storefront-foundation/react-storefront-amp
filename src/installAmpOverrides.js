@@ -8,10 +8,14 @@ import ImageMagnify from './carousel/ImageMagnify'
 import MenuBody from 'react-storefront/menu/MenuBody'
 import Media from 'react-storefront/carousel/Media'
 import CarouselThumbnails from 'react-storefront/carousel/CarouselThumbnails'
+import AmpCarouselThumbnails from './carousel/AmpCarouselThumbnails'
+import MediaCarousel from 'react-storefront/carousel/MediaCarousel'
 import AmpExpandableSection from './AmpExpandableSection'
 
 export default function installAmpOverrides() {
   CarouselThumbnails.defaultProps.ImageComponent = AmpImage
+  MediaCarousel.defaultProps.CarouselThumbnailsComponent = AmpCarouselThumbnails
+  MediaCarousel.defaultProps.ImageComponent = AmpImage
   Media.defaultProps.ImageMagnifyComponent = ImageMagnify
   Media.defaultProps.ImageComponent = AmpImage
   SwatchProductOption.defaultProps.ImageComponent = AmpImage

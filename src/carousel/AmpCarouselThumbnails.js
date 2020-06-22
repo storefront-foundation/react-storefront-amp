@@ -4,14 +4,19 @@
  */
 import React from 'react'
 import clsx from 'clsx'
-import Image from 'react-storefront/Image'
-import { styles } from 'react-storefront/carousel/CarouselThumbnails'
+import Image from '../AmpImage'
+import CarouselThumbnails, { styles } from 'react-storefront/carousel/CarouselThumbnails'
 import { makeStyles } from '@material-ui/core/styles'
+import { useAmp } from 'next/amp'
 import withDataBinding from '../bind/withDataBinding'
 
 const useStyles = makeStyles(styles, { name: 'RSFAmpCarouselThumbnails' })
 
-function AmpCarouselThumbnails({ amp, carouselId, thumbnails, className, thumbnailPosition }) {
+function AmpCarouselThumbnails(props) {
+  if (!useAmp()) return <CarouselThumbnails {...props} />
+
+  const { amp, carouselId, thumbnails, className, thumbnailPosition } = props
+
   const styles = useStyles()
   const isVertical = ['left', 'right'].includes(thumbnailPosition)
 

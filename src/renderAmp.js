@@ -111,6 +111,24 @@ export default async function renderAmp(document, sheets) {
     $el.addClass(className)
   })
 
+  // replace all img tags with amp-img
+  $('img').each((_, img) => {
+    const $img = $(img)
+    const $ampImg = $('<amp-img layout="intrinsic"></amp-img>')
+    if ($img.attr('src')) $ampImg.attr('src', $img.attr('src'))
+    if ($img.attr('alt')) $ampImg.attr('alt', $img.attr('alt'))
+    if ($img.attr('height')) $ampImg.attr('height', $img.attr('height'))
+    if ($img.attr('width')) $ampImg.attr('width', $img.attr('width'))
+    if ($img.attr('data-height')) $ampImg.attr('height', $img.attr('data-height'))
+    if ($img.attr('data-width')) $ampImg.attr('width', $img.attr('data-width'))
+    for (let name in img.attribs) {
+      if (name.startsWith('data-amp-')) {
+        $ampImg.attr(name.replace(/^data-amp-/, ''), img.attribs[name])
+      }
+    }
+    $img.replaceWith($ampImg)
+  })
+
   $('body')
     .addClass('moov-amp')
     .prepend(renderAmpAnalyticsTags())

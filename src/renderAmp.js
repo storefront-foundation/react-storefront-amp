@@ -92,13 +92,6 @@ export default async function renderAmp(document, sheets) {
   // material-ui puts this on tab underlines
   $('div[direction]').removeAttr('direction')
 
-  // move amp-sidebar into direct child of body
-  const sidebar = $('amp-sidebar').get()
-  if (sidebar) {
-    $(sidebar).remove()
-    $('body').append(sidebar)
-  }
-
   let styleId = 0
   const inlineStyles = new Map()
   const styles = []

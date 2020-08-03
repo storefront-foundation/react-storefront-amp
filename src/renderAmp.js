@@ -1,6 +1,10 @@
 import React from 'react'
 import cheerio from 'cheerio'
 import { renderAmpAnalyticsTags } from 'react-storefront-analytics'
+import batchPromises from './utils/batchPromises'
+import getImageSize from './utils/getImageSize'
+import { absoluteURL } from './utils/url'
+import URL from 'url'
 
 const INVALID_CSS_CLASS_REGEX = /\.i-(amphtml[^\s.]*)/g
 
@@ -18,11 +22,13 @@ export const removeInvalidCssClasses = sheets => {
   return sheets
 }
 
-export default async function renderAmp(document, sheets) {
+export default async function renderAmp(document, sheets, currentUrl, { imageService } = {}) {
   // $('img').attr({ height: '64', width: '64' })
   // document.html = $('body').html()
 
   const $ = cheerio.load(document.html)
+
+  const imagesThatNeedSizes = []
 
   // Add ⚡ to html
   $('html').attr('⚡', '')
@@ -127,6 +133,31 @@ export default async function renderAmp(document, sheets) {
       }
     }
     $img.replaceWith($ampImg)
+  })
+
+  // All img tags need a height and width in AMP.  If those are missing, call moovweb's image size service
+  // to get the height and width and assign it to the image.
+  $('amp-img').each((_, img) => {
+    const $img = $(img)
+
+    if ($img.attr('layout') == 'fill') {
+      return
+    } else if (!$img.attr('height') || !$img.attr('width')) {
+      imagesThatNeedSizes.push($img)
+    }
+  })
+
+  // Fetch sizes for images that are missing a height and width in batches of 10 concurrently.
+  await batchPromises(10, imagesThatNeedSizes, async $img => {
+    const src = $img.attr('src')
+    try {
+      const url = src.startsWith('data:') ? src : absoluteURL(src, URL.parse(currentUrl))
+      const { height, width } = await getImageSize(url, imageService)
+      $img.attr('height', height)
+      $img.attr('width', width)
+    } catch (e) {
+      console.log(`warning: could not get height and width for ${src}`, e)
+    }
   })
 
   $('body')

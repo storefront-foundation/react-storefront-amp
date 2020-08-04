@@ -27,7 +27,7 @@ export default function AmpSearchField(props) {
         inputProps={
           amp
             ? {
-                'amp-bind': `value->${ampState}.text`,
+                'amp-bind': `value->${ampState}.text || ''`,
                 on: `input-debounced:AMP.setState({ ${ampState}: { text: ${ampState}.___moov_submitting ? ${ampState}.text : event.value } })`,
               }
             : undefined

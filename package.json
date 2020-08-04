@@ -1,6 +1,6 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "React Storefront commercial AMP extension",
   "module": "./index.js",
   "directories": {
@@ -30,7 +30,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^0.22.0"
+    "cheerio": "^0.22.0",
+    "p-queue": "^6.6.0",
+    "probe-image-size": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",

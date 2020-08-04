@@ -24,7 +24,8 @@ export function relativeURL(url) {
   }
 }
 
-const cleanProtocol = protocol => (protocol || '').replace(/:/, '')
+// If a protocol is not specified, fallback to secure
+const cleanProtocol = protocol => (protocol || 'https').replace(/:/, '')
 
 /**
  * Creates an absolute URL for the given URL

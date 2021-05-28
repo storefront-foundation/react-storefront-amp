@@ -1,7 +1,10 @@
 {
   "name": "react-storefront-amp",
-  "version": "1.2.9",
-  "description": "React Storefront commercial AMP extension",
+  "version": "1.2.10",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/storefront-foundation/react-storefront-amp",
+  "bugs": "https://github.com/storefront-foundation/react-storefront-amp/issues",
+  "description": "AMP support for React Storefront",
   "module": "./index.js",
   "directories": {
     "test": "test"
@@ -17,7 +20,7 @@
     }
   },
   "scripts": {
-    "release": "npm run build; cd dist; FILE=$(npm pack); curl -F package=@$FILE https://$GEMFURY_PUSH_TOKEN@push.fury.io/moovweb/",
+    "release": "npm run build; cd dist; npm publish; cd ..",
     "test": "jest",
     "watch": "npm-watch",
     "push-build": "npm run build && cd dist && yalc push && cd ..",
@@ -27,8 +30,6 @@
     "build:prep": "npm run clean && npm run create-indexes && cp package.json dist",
     "build:sources": "babel ./src --source-maps --out-dir dist"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cheerio": "^0.22.0",
     "p-queue": "^6.6.0",
